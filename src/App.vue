@@ -1,28 +1,38 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <b-container>
+    <splash-screen v-if="isLoading" />
+    <transition
+      name="main"
+      enter-active-class="animate__animated animate__fadeInDown"
+    >
+      <div v-if="!isLoading" class="container d-flex flex-column vh-100">
+        <TheNavbar />
+        <router-view class="flex-fill" />
+        <TheFooter />
+      </div>
+    </transition>
+  </b-container>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TheNavbar from './components/Navbar.vue';
+import TheFooter from './components/Footer.vue';
+import SplashScreen from './components/SplashScreen.vue';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  components: { TheNavbar, TheFooter, SplashScreen },
+  data() {
+    return {
+      isLoading: true,
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3500);
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
